@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>AFTRNEST</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css"> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">   
+    </head>
+    <body>
+        <div id="app" class="productpage">
+            
+            <nav id ="gotoCheckout" class="oswald-font">
+                <h3>home</h3>
+                <img src="images/aftrnestLOGO.png" class="logo">
+                <button v-on:click="showCheckout" class="oswald-font" v-if="cartItemCount > 0">
+                    <span class="fa-solid fa-cart-shopping"></span>
+                    cart {{ cartItemCount }}
+                </button>
+                <button disabled="disabled" v-else class="oswald-font">
+                    <span class="fa-solid fa-cart-shopping"></span>
+                    cart
+                </button> 
+            </nav>
+            <div v-if="showProduct">
+                <div class="bordervert"></div>
+                <div class="container1">
+                    <img src="images/allsport.png" class="runningman">
+                    <img src="images/shuttle.png" class="shuttle">
+                    <h1 class="oswald-font">find your place beyond class.</h1>
+                    <p>From exciting sports activities to creative workshops and skill-building clubs, AFTRNEST connects students with meaningful experiences that make every after-school hour count.</p>
+                    <div class="line"></div>
+                </div> 
+                <div id="Main">
+                    <header>
+                        <div class="bgBrown">
+                            <h1 v-text="sitename" class="oswald-font"></h1>  
+                            
+                            <div class="oswald-font" id="sortingRadio">
+                                <label class="radio" id="sortby">
+                                    <h3 class="oswald-font">sort by</h3>
+                                </label>
+                                <label class="radio" id="priceAsc">                                
+                                    <input v-on:change="sort" type="radio" v-model="sortOrder" value="asc" name="order" checked> 
+                                    <span class="name">Ascending</span>
+                                </label>
+                                <label class="radio" id="priceDesc">                                
+                                    <input v-on:change="sort" type="radio" v-model="sortOrder" value="desc" name="order">
+                                    <span class="name">Descending</span>
+                                </label>
+                                <label class="radio" id="priceOpt">                                
+                                    <input v-on:change="sort" type="radio" v-model="sortOpt" value="price" name="option">
+                                    <span class="name">Price</span>
+                                </label>
+                                <label class="radio" id="classOpt">                                
+                                    <input v-on:change="sort" type="radio" v-model="sortOpt" value="class" name="option">  
+                                    <span class="name">Class</span>
+                                </label> 
+                                <label class="radio" id="locationOpt">                                
+                                    <input v-on:change="sort" type="radio" v-model="sortOpt" value="location" name="option">
+                                    <span class="name">Location</span>
+                                </label> 
+            
+                            </div>
+
+                            <div id="circle"></div>
+                        </div>
+                    </header>
+                    <main>
+                        <figure v-for="x in activity" v-bind:key="x.id">
+                            <span id="remaining" v-if="x.availableInventory < 5" class="oswald-font">
+                                        Only {{ x.availableInventory}} left!
+                                    </span>
+                            <img v-bind:src="x.image">
+                            <div id="details">
+                                <h2 class="oswald-font">{{x.class}}</h2>
+                                <div id="ratings" class="oswald-font">
+                                    <span v-for="n in x.rating" class="fa-solid fa-star"></span>
+                                    <span v-for="n in 5 - x.rating" class="fa-regular fa-star" ></span>{{ x.rating }}
+                                </div>
+                                <div class="arimo-font" id="details2">
+                                    
+                                    <p>Location: {{x.location}}</p>
+                                    <p>Price: AED {{x.price}}</p>
+                                    <p>Available Inventory: {{x.availableInventory}}</p>
+                                </div>
+                            </div>
+                            <div id="buttonsCart">
+                                <button id="addingbt" v-on:click="addToCart(x)" v-if="x.availableInventory > 0" class="league-spartan-font">  
+                                    Add to cart
+                                </button>
+                                <button id="soldout_bt" disabled="disabled" v-else class="league-spartan-font">
+                                    Sold out
+                                </button> 
+                            </div>
+
+                        </figure>
+                    </main>
+                </div>
+            </div>
+
+            
+            <div v-else class="checkoutpage">
+                <div class="shape2"></div>
+                <header class="oswald-font">
+                    <div class="shape"></div>
+                    <div class="shape2"></div>
+                    <h2>Checkout</h2>
+                    <img src="images/mascot.png">
+                    <p>total  cost AED {{ sumOfCart }}</p>
+                </header>
+
+                <main>
+                    <div class="checkInfo">
+                        <h2 id="title" class="oswald-font">Personal Information</h2>
+                        <div id="userInfo">
+                            <p><input type="email" v-model.trim="user.email" placeholder="email"></p>
+                            <p><input type="text" v-model.trim="user.firstName" placeholder="first name"></p>
+                            <p><input type="text" v-model.trim="user.lastName" placeholder="last name"></p>
+                            <p><input type="text" v-model.trim="user.phone" placeholder="phone number"></p>
+                        </div>
+
+                        
+                        <h2 id="title" class="oswald-font">Order Information</h2>
+                        <div id="userOrder">
+                            <p><input type="text" v-model="order.country" placeholder="country/region"></p>
+                            <p><input type="text" v-model="order.address" placeholder="address"></p>
+                            <p>
+                                <select v-model="order.city" class="city-select">
+                                    <option disabled value="">City</option>
+                                    <option v-for="city in cityOptions" v-bind:value="city.value">
+                                        {{ city.text }}
+                                    </option>
+                                </select>
+                            </p>
+                            <p><input type="text" v-model="order.postalCode" placeholder="zip/postal code"></p>
+                        </div>
+                        <button id="checkoutbt"  v-if="errors" v-on:click="submitForm" class="league-spartan-font">
+                            Checkout
+                        </button>
+                        <button id="checkoutbt-error" disabled v-else v-on:click="submitForm" class="league-spartan-font">
+                            Checkout
+                        </button>
+                    </div>
+                    <div class="main-box"></div>
+                    <div id="box-header" class="oswald-font">
+                        <h2>checkout summary</h2>
+                        <div class="h3-group">
+                            <h3>item</h3>
+                            <h3>quantity</h3>
+                            <h3>price</h3>
+                            <h3>delete</h3>
+                        </div>
+                    </div>
+                    <div class="cartList">
+                        <div v-for="item in cartSlots" :key="item.id" id="summary" class="oswald-font">
+                            <div class="item-product">
+                            <img v-bind:src="item.image">
+                            </div>
+                            <div class="item-name">
+                                <h3>{{ item.class }}</h3>
+                                <p class="arimo-font ">Location: {{ item.location }}</p> 
+                            </div>
+                            <div class="item-quantity">
+                                <p>{{ item.quantity }}</p>
+                            </div>
+                            <div class="item-price">
+                                <p>AED {{ item.price }}</p>
+                            </div>
+                            <div class="item-delete">
+                                <button v-on:click="removeFromCart(item)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>  
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="script.js" type="text/javascript"></script>
+    </body>
+</html>
