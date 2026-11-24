@@ -32,15 +32,15 @@ let webstore = new Vue({
     },
 
     created: function() {
-        fetch("http://localhost:3000/collection/lessons").then (
-            function(response) {
-                response.json().then(
-                    function(json) {
-                        webstore.activity = json;
-                    }
-                )
-            }
-        )
+            fetch("http://localhost:3000/collection/lessons").then (
+                function(response) {
+                    response.json().then(
+                        function(json) {
+                            webstore.activity = json;
+                        }
+                    )
+                }
+            )
     },
 
     methods: {
