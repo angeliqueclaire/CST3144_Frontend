@@ -32,7 +32,7 @@ let webstore = new Vue({
     },
 
     created: function() {
-        fetch('http://localhost:3000/api/lessons').then (
+        fetch("http://localhost:3000/collection/lessons").then (
             function(response) {
                 response.json().then(
                     function(json) {
@@ -107,7 +107,7 @@ let webstore = new Vue({
                 orderData.numOfSpaces.push(this.cartSlots[i].quantity);
             }
 
-            fetch("/api/orders", {
+            fetch("/collection/orders", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -121,7 +121,7 @@ let webstore = new Vue({
                     alert(data.message);
 
                 for (var i = 0; i < webstore.cartSlots.length; i++) {
-                    fetch("/api/lessons/" + webstore.cartSlots[i].id, {
+                    fetch("/collection/lessons/" + webstore.cartSlots[i].id, {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json"
