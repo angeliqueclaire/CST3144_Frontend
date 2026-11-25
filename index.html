@@ -17,7 +17,7 @@
             
             <nav id ="gotoCheckout" class="oswald-font">
                 <h3>home</h3>
-                <img src="https://cst3144-backend-e38z.onrender.com/static/aftrnestLOGO.png" class="logo">
+                <img src="https://cst3144-backend-e38z.onrender.com/aftrnestLOGO.png" class="logo">
                 <button v-on:click="showCheckout" class="oswald-font" v-if="cartItemCount > 0">
                     <span class="fa-solid fa-cart-shopping"></span>
                     cart {{ cartItemCount }}
@@ -30,8 +30,8 @@
             <div v-if="showProduct">
                 <div class="bordervert"></div>
                 <div class="container1">
-                    <img src= "https://cst3144-backend-e38z.onrender.com/static/allsport.png" class="runningman">
-                    <img src="https://cst3144-backend-e38z.onrender.com/static/shuttle.png" class="shuttle">
+                    <img src= "https://cst3144-backend-e38z.onrender.com/allsport.png" class="runningman">
+                    <img src="https://cst3144-backend-e38z.onrender.com/shuttle.png" class="shuttle">
                     <h1 class="oswald-font">find your place beyond class.</h1>
                     <p>From exciting sports activities to creative workshops and skill-building clubs, AFTRNEST connects students with meaningful experiences that make every after-school hour count.</p>
                     <div class="line"></div>
@@ -76,7 +76,7 @@
                             <span id="remaining" v-if="x.availableInventory < 5" class="oswald-font">
                                         Only {{ x.availableInventory}} left!
                                     </span>
-                            <img v-bind:src="x.image">
+                            <img v-bind:src="'https://cst3144-backend-e38z.onrender.com/' + x.image">
                             <div id="details">
                                 <h2 class="oswald-font">{{x.class}}</h2>
                                 <div id="ratings" class="oswald-font">
@@ -111,7 +111,7 @@
                     <div class="shape"></div>
                     <div class="shape2"></div>
                     <h2>Checkout</h2>
-                    <img src="https://cst3144-backend-e38z.onrender.com/static/mascot.png">
+                    <img src="https://cst3144-backend-e38z.onrender.com/mascot.png">
                     <p>total  cost AED {{ sumOfCart }}</p>
                 </header>
 
@@ -160,7 +160,7 @@
                     <div class="cartList">
                         <div v-for="item in cartSlots" :key="item.id" id="summary" class="oswald-font">
                             <div class="item-product">
-                            <img v-bind:src="item.image">
+                            <img v-bind:src=" 'https://cst3144-backend-e38z.onrender.com/' + item.image">
                             </div>
                             <div class="item-name">
                                 <h3>{{ item.class }}</h3>
