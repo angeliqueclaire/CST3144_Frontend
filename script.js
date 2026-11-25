@@ -130,7 +130,8 @@ let webstore = new Vue({
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            availableInventory: webstore.cartSlots[i].availableInventory
+                            availableInventory: webstore.cartSlots[i].availableInventory,
+                            quantity: webstore.cartSlots[i].quantity
                         })
                     })
 
