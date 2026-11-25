@@ -1,3 +1,4 @@
+const backendURL = "https://cst3144-backend-e38z.onrender.com";
 let webstore = new Vue({
     el: '#app',
     data: {
@@ -32,11 +33,13 @@ let webstore = new Vue({
     },
 
     created: function() {
-            fetch("http://localhost:3000/collection/lessons").then (
+        console.log("Loading lessons from COLLECTION");
+        fetch(backendURL + "/collection/lessons").then (
                 function(response) {
                     response.json().then(
                         function(json) {
                             webstore.activity = json;
+                            console.log("Lessons received:", json);
                         }
                     )
                 }
@@ -107,7 +110,7 @@ let webstore = new Vue({
                 orderData.numOfSpaces.push(this.cartSlots[i].quantity);
             }
 
-            fetch("/collection/orders", {
+            fetch(backendURL + "/collection/orders", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -121,7 +124,7 @@ let webstore = new Vue({
                     alert(data.message);
 
                 for (var i = 0; i < webstore.cartSlots.length; i++) {
-                    fetch("/collection/lessons/" + webstore.cartSlots[i].id, {
+                    fetch(backendURL + "/collection/lessons/" + webstore.cartSlots[i].id, {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json"
